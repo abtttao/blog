@@ -24,7 +24,8 @@ app.use(express.urlencoded({ extended: true }));
 //******** Page routes  *********************/
 //--root---
 app.get('/', (res, res) => {
-    res.render('index')
+    const content = "I love back end I love back end I love back end I love back end"
+    res.render('index', { content: content })
 })
 
 //--- sign in ----
@@ -34,15 +35,20 @@ app.get('/signin', (res, res) => {
 
 //--- blog ----
 app.get('/blog', (res, res) => {
-    res.render('blog')
+    const years = [2020,2021,2019]
+    const posts = [{title: "Today", detail: "quite hot" , year:2021},
+    {title: "Tomoror", detail: "be fine" , year:2020},
+    {title: "ccc", detail: "CCC" , year:2019}]
+    res.render('blog' , {year:years});
+
 })
 
 
 //******** Other routes  ********************/
 //-- login ----
-app.post('/login', (req,res) => {
-    const {username,password}=req.body;
-    if(username == 'admin' && password =='1234'){
+app.post('/login', (req, res) => {
+    const { username, password } = req.body;
+    if (username == 'admin' && password == '1234') {
         res.send('Login OK');
     }
     else {
