@@ -1,8 +1,9 @@
 //******** Importing   **********************/
 const express = require('express');
 const path = require('path');
-
+const helmet = require('helmet');
 const app = express();
+
 
 //******** View engine  **********************/
 app.set('View engine', 'ejs');
@@ -10,6 +11,7 @@ app.set('View engine', 'ejs');
 
 
 //******** Middleware  **********************/
+app.use(helmet());
 app.use(express.static(path.join(__dirname, 'publice')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -25,8 +27,28 @@ app.get('/', (res, res) => {
     res.render('index')
 })
 
-//******** Other routes  ********************/
+//--- sign in ----
+app.get('/signin', (res, res) => {
+    res.render('login')
+})
 
+//--- blog ----
+app.get('/blog', (res, res) => {
+    res.render('blog')
+})
+
+
+//******** Other routes  ********************/
+//-- login ----
+app.post('/login', (req,res) => {
+    const {username,password}=req.body;
+    if(username == 'admin' && password =='1234'){
+        res.send('Login OK');
+    }
+    else {
+        res.status(400).send('Login failed')
+    }
+})
 
 
 // 404, must be the last service
